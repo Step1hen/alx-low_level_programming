@@ -1,14 +1,29 @@
 #include "lists.h"
-/**
-  * listint_len - gets the number of nodes in a list
-  * @h: singly linked list to print
-  * Return: number of nodes in the list
-  */
-size_t listint_len(const listint_t *h)
-{
-	size_t i;
 
-	for (i = 0; h; i++)
+/**
+ * list_len - gets the total of nodes
+ *
+ * @h: pointer to the head (initial node)
+ *
+ * Return: number of nodes
+*/
+
+size_t list_len(const list_t *h)
+{
+	size_t node_count = 1;
+
+	/*if head is null return 0 nodes*/
+	if (h == NULL)
+		return (0);
+
+	/*iterate through the nodes*/
+	while (h->next != NULL)
+	{
+		/*go to the next node*/
 		h = h->next;
-	return (i);
+		/*count node*/
+		node_count++;
+	}
+
+	return (node_count);
 }

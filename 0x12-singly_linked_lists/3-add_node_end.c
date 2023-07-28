@@ -1,29 +1,53 @@
 #include "lists.h"
-#include <stdlib.h>
+
 /**
-  * add_nodeint_end - add new nodes to the end of the list
-  * @head: current place in the list
-  * @n: int to add to the list
-  * Return: pointer to current position in list
-  */
-listint_t *add_nodeint_end(listint_t **head, const int n)
+ * add_node_end - end of the linked list
+ *
+ * @head: pointer to the first node
+ * @str: string to add
+ *
+ * Return: NULL if it fails on the list
+*/
+
+list_t *add_node_end(list_t **head, const char *str)
 {
-	listint_t *new, *current;
+	list_t *new_node, *temp;
+	size_t str_len = 0;
 
-	new = malloc(sizeof(listint_t));
-	if (new == NULL)
+	/*set strig length to 0 if its NULL*/
+	if (str == NULL)
+		str_len = 0;
+
+	/*count length of string*/
+	while (str[str_len] != '\0')
+		str_len++;
+
+	new_node = malloc(sizeof(list_t));
+	if (new_node == NULL)
 		return (NULL);
-	new->n = n;
-	new->next = NULL;
 
-	if (*head == NULL)
+	new_node->str = strdup(str);
+	new_node->len = str_len;
+	new_node->next = NULL;
+
+	/*copy our starting node pointer to temp*/
+	temp = *head;
+
+	/*if temp is NULL place our new_node at the start of the list*/
+	/*else if its not null we place our new_node to temp->next hence*/
+	/*adding our new_node at the end of the list*/
+	if (temp == NULL)
+		*head = new_node;
+	else
 	{
-		*head = new;
-		return (*head);
+		/**
+		 * we iterate pointer next addr if its not NULL our temp addr
+		 * points to the next addr or the next node.
+		*/
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new_node;
 	}
-	current = *head;
-	while (current->next != NULL)
-		current = current->next;
-	current->next = new;
+
 	return (*head);
 }
